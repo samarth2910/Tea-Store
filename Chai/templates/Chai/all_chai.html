@@ -2,6 +2,50 @@
 {% block title %}All Chai{% endblock %}
 
 {% block content %}
+<!-- 🔝 AUTO-HIDING NAVBAR -->
+<header id="navbar" class="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-50 navbar-visible transition-transform duration-300">
+  <div class="text-xl font-bold text-amber-800">
+    <a href="{% url 'home' %}">☕ ChaiWala</a>
+  </div>
+  <nav class="space-x-4">
+    <sl-button variant="warning" outline onclick="location.href='{% url 'home' %}'">Home</sl-button>
+    <sl-button variant="warning" outline onclick="location.href='{% url 'all_chai' %}'">All Chai</sl-button>
+    <sl-button variant="warning" outline onclick="location.href='{% url 'view_cart' %}'">🛒 Cart</sl-button>
+    <sl-button variant="warning" outline>Orders</sl-button>
+    <sl-button variant="primary" outline>Login</sl-button>
+  </nav>
+</header>
+
+<!-- 👇 Scroll Behavior Script -->
+<script>
+  let lastScrollTop = 0;
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", function () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      navbar.classList.remove("navbar-visible");
+      navbar.classList.add("navbar-hidden");
+    } else {
+      navbar.classList.remove("navbar-hidden");
+      navbar.classList.add("navbar-visible");
+    }
+    lastScrollTop = scrollTop;
+  });
+</script>
+
+<!-- 👇 Include in <style> tag or CSS file -->
+<style>
+  .navbar-hidden {
+    transform: translateY(-100%);
+  }
+
+  .navbar-visible {
+    transform: translateY(0);
+  }
+</style>
+
 <h1 class="text-3xl font-bold mb-4">All chai for you</h1>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-4">
@@ -15,15 +59,16 @@
       />
 
       <strong style="font-size: 1.25rem; color: #111827;">{{ chai.name }}</strong><br />
-      <span style="color: #374151;">{{ chai.description }}</span><br />
+      <span style="color: #374151;">{{ chai.short_Description }}</span><br />
       <small>Type: {{ chai.get_type_display }}</small>
 
-      <div slot="footer">
-        <a href="{% url 'chai_detail' chai.id %}">
-          <sl-button variant="primary" pill>More Info</sl-button>
-        </a>
-        <sl-rating></sl-rating>
-      </div>
+<div class="mt-8">
+  <a href="{% url 'chai_detail' chai.id %}"
+     class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-6 rounded-full text-lg shadow transition">
+    More Info
+  </a>
+</div>
+
     </sl-card>
   {% endfor %}
 </div>

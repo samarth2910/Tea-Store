@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Chai(models.Model):
     name = models.CharField(max_length=100)
+    short_Description = models.CharField(max_length=200, default="")
     date_added = models.DateTimeField(default=timezone.now)
     img = models.ImageField(upload_to='chai_images')
     description = models.TextField(default="")
@@ -28,6 +29,7 @@ class Chai_Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
     review_text = models.TextField(default="")
+    
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
