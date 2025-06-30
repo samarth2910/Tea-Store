@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block title %}All Chai{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-4">All chai for you</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-4">
+  {% for chai in chais %}
+    <sl-card class="card-overview">
+      <img
+        slot="image"
+        src="{{ chai.img.url }}"
+        alt="{{ chai.name }}"
+        style="object-fit: cover; height: 200px; width: 100%;"
+      />
+
+      <strong style="font-size: 1.25rem; color: #111827;">{{ chai.name }}</strong><br />
+      <span style="color: #374151;">{{ chai.description }}</span><br />
+      <small>Type: {{ chai.get_type_display }}</small>
+
+      <div slot="footer">
+        <a href="{% url 'chai_detail' chai.id %}">
+          <sl-button variant="primary" pill>More Info</sl-button>
+        </a>
+        <sl-rating></sl-rating>
+      </div>
+    </sl-card>
+  {% endfor %}
+</div>
+
+<style>
+  .card-overview {
+    max-width: 340px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  .card-overview small {
+    color: var(--sl-color-neutral-500);
+  }
+
+  .card-overview [slot='footer'] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+</style>
+{% endblock %}

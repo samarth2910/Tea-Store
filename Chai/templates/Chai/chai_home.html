@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChaiWala - Home</title>
+
+  <!-- Shoelace -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/carousel/carousel.js"></script>
+
+  <!-- Tailwind CDN for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    sl-carousel {
+      height: 100vh;
+      width: 100%;
+    }
+
+    sl-carousel-item img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-overview {
+      max-width: 340px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    .card-overview small {
+      color: var(--sl-color-neutral-500);
+    }
+
+    .card-overview [slot='footer'] {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- 🔝 NAVBAR -->
+<header class="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-50">
+  <div class="text-xl font-bold text-amber-800">
+    <a href="{% url 'home' %}">☕ ChaiWala</a>
+  </div>
+  <nav class="space-x-4">
+    <sl-button variant="text" onclick="location.href='{% url 'home' %}'">Home</sl-button>
+    <sl-button variant="text" onclick="location.href='{% url 'all_chai' %}'">All Chai</sl-button>
+    <sl-button variant="text" onclick="location.href='{% url 'view_cart' %}'">Cart</sl-button>
+    <sl-button variant="text">Orders</sl-button>
+    <sl-button variant="primary">Login</sl-button>
+  </nav>
+</header>
+
+<!-- 🎞️ HERO CAROUSEL -->
+<sl-carousel autoplay loop pagination>
+  <sl-carousel-item>
+    <img src="{% static 'images/ginger tea.jpg' %}" alt="Ginger Tea" />
+  </sl-carousel-item>
+  <sl-carousel-item>
+    <img src="{% static 'images/green tea.jpg' %}" alt="Green Tea" />
+  </sl-carousel-item>
+  <sl-carousel-item>
+    <img src="{% static 'images/ice tea.jpg' %}" alt="Ice Tea" />
+  </sl-carousel-item>
+  <sl-carousel-item>
+    <img src="{% static 'images/masala tea.jpg' %}" alt="Masala Tea" />
+  </sl-carousel-item>
+</sl-carousel>
+
+<!-- 👋 WELCOME SECTION -->
+<section class="text-center my-12">
+  <h1 class="text-4xl font-bold text-amber-900">Welcome to ChaiWala</h1>
+  <p class="text-lg text-gray-700 mt-2">Serving you happiness in every cup 🍵</p>
+  <sl-button variant="primary" size="large" class="mt-4" onclick="location.href='{% url 'all_chai' %}'">Order Now</sl-button>
+</section>
+
+<!-- 🌟 FEATURED TEAS -->
+<section class="px-10 py-8 bg-white">
+  <h2 class="text-2xl font-bold text-center text-amber-800 mb-6">Featured Teas</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- Masala Tea -->
+    <sl-card class="card-overview">
+      <img slot="image" src="{% static 'images/masala tea.jpg' %}" alt="Masala Tea"
+           style="object-fit: cover; height: 200px; width: 100%;" />
+      <strong style="font-size: 1.25rem;">Masala Tea</strong><br />
+      <span>₹30</span>
+      <div slot="footer">
+        {% comment %} <sl-button variant="success" size="small" onclick="location.href='{% url 'add_to_cart' 'Masala Tea' %}'">Add to Cart</sl-button> {% endcomment %}
+        <sl-rating></sl-rating>
+      </div>
+    </sl-card>
+
+    <!-- Ginger Tea -->
+    <sl-card class="card-overview">
+      <img slot="image" src="{% static 'images/ginger tea.jpg' %}" alt="Ginger Tea"
+           style="object-fit: cover; height: 200px; width: 100%;" />
+      <strong style="font-size: 1.25rem;">Ginger Tea</strong><br />
+      <span>₹35</span>
+      <div slot="footer">
+        {% comment %} <sl-button variant="success" size="small" onclick="location.href='{% url 'add_to_cart' 'Ginger Tea' %}'">Add to Cart</sl-button> {% endcomment %}
+        <sl-rating></sl-rating>
+      </div>
+    </sl-card>
+
+    <!-- Ice Tea -->
+    <sl-card class="card-overview">
+      <img slot="image" src="{% static 'images/ice tea.jpg' %}" alt="Ice Tea"
+           style="object-fit: cover; height: 200px; width: 100%;" />
+      <strong style="font-size: 1.25rem;">Ice Tea</strong><br />
+      <span>₹40</span>
+      <div slot="footer">
+        {% comment %} <sl-button variant="success" size="small" onclick="location.href='{% url 'add_to_cart' 'Ice Tea' %}'">Add to Cart</sl-button> {% endcomment %}
+        <sl-rating></sl-rating>
+      </div>
+    </sl-card>
+
+    <!-- Green Tea -->
+    <sl-card class="card-overview">
+      <img slot="image" src="{% static 'images/green tea.jpg' %}" alt="Green Tea"
+           style="object-fit: cover; height: 200px; width: 100%;" />
+      <strong style="font-size: 1.25rem;">Green Tea</strong><br />
+      <span>₹38</span>
+      <div slot="footer">
+        {% comment %} <sl-button variant="success" size="small" onclick="location.href='{% url 'add_to_cart' 'Green Tea' %}'">Add to Cart</sl-button> {% endcomment %}
+        <sl-rating></sl-rating>
+      </div>
+    </sl-card>
+  </div>
+</section>
+
+</body>
+</html>

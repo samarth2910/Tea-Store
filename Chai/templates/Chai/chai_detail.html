@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}Hello{% endblock title %}
+
+{% block content %}
+<h1>
+{{chai.name}} </h1>
+      <img class="rounded" src="{{ chai.img.url }}" alt="" width="700" height="100" >
+ <h2>Price:{{chai.price}}</h2>
+</h3>{{chai.description}}</h3>
+
+{% endblock %}
