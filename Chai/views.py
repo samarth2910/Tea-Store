@@ -1,6 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Chai
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+    
+    
+
 # Create your views here.
 def all_chai(request):
     # This view will render a template that lists all chai items
@@ -20,3 +27,13 @@ def chai_home(request):
 def view_cart(request):
     return HttpResponse("Cart page coming soon!")
 
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Signup successful! You can now log in.")
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'Chai/signup.html', {'form': form})

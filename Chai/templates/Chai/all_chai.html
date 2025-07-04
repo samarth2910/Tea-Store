@@ -2,74 +2,30 @@
 {% block title %}All Chai{% endblock %}
 
 {% block content %}
-<!-- 🔝 AUTO-HIDING NAVBAR -->
-<header id="navbar" class="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-50 navbar-visible transition-transform duration-300">
-  <div class="text-xl font-bold text-amber-800">
-    <a href="{% url 'home' %}">☕ ChaiWala</a>
-  </div>
-  <nav class="space-x-4">
-    <sl-button variant="warning" outline onclick="location.href='{% url 'home' %}'">Home</sl-button>
-    <sl-button variant="warning" outline onclick="location.href='{% url 'all_chai' %}'">All Chai</sl-button>
-    <sl-button variant="warning" outline onclick="location.href='{% url 'view_cart' %}'">🛒 Cart</sl-button>
-    <sl-button variant="warning" outline>Orders</sl-button>
-    <sl-button variant="primary" outline>Login</sl-button>
-  </nav>
-</header>
+<h1 class="text-3xl font-bold text-center text-amber-800 mb-10">All Chai for You</h1>
 
-<!-- 👇 Scroll Behavior Script -->
-<script>
-  let lastScrollTop = 0;
-  const navbar = document.getElementById("navbar");
-
-  window.addEventListener("scroll", function () {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
-      navbar.classList.remove("navbar-visible");
-      navbar.classList.add("navbar-hidden");
-    } else {
-      navbar.classList.remove("navbar-hidden");
-      navbar.classList.add("navbar-visible");
-    }
-    lastScrollTop = scrollTop;
-  });
-</script>
-
-<!-- 👇 Include in <style> tag or CSS file -->
-<style>
-  .navbar-hidden {
-    transform: translateY(-100%);
-  }
-
-  .navbar-visible {
-    transform: translateY(0);
-  }
-</style>
-
-<h1 class="text-3xl font-bold mb-4">All chai for you</h1>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
   {% for chai in chais %}
     <sl-card class="card-overview">
       <img
         slot="image"
         src="{{ chai.img.url }}"
         alt="{{ chai.name }}"
-        style="object-fit: cover; height: 200px; width: 100%;"
+        class="w-full h-52 object-cover rounded"
       />
 
-      <strong style="font-size: 1.25rem; color: #111827;">{{ chai.name }}</strong><br />
-      <span style="color: #374151;">{{ chai.short_Description }}</span><br />
-      <small>Type: {{ chai.get_type_display }}</small>
+      <strong class="text-lg text-gray-900">{{ chai.name }}</strong><br />
+      <p class="text-gray-600 mb-1">{{ chai.short_Description }}</p>
+      <small class="text-gray-500">Type: {{ chai.get_type_display }}</small>
 
-<div class="mt-8">
-  <a href="{% url 'chai_detail' chai.id %}"
-     class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-6 rounded-full text-lg shadow transition">
-    More Info
-  </a>
-</div>
-
+      <div slot="footer">
+        <a href="{% url 'chai_detail' chai.id %}">
+          <sl-button variant="primary">More Info</sl-button>
+        </a>
+      </div>
     </sl-card>
+  {% empty %}
+    <p class="text-center text-gray-500 col-span-full">No chai items found.</p>
   {% endfor %}
 </div>
 
@@ -81,17 +37,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     padding: 1rem;
-  }
-
-  .card-overview small {
-    color: var(--sl-color-neutral-500);
-  }
-
-  .card-overview [slot='footer'] {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
   }
 </style>
 {% endblock %}

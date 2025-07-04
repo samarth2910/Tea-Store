@@ -6,30 +6,90 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>{% block title %}Default Value{% endblock %}</title>
+  <title>{% block title %}ChaiWala{% endblock %}</title>
 
-  <!-- ✅ Shoelace CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css" />
+  <!-- ✅ Shoelace -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/carousel/carousel.js"></script>
 
-  <!-- ✅ Shoelace Autoloader (loads all components like sl-input, sl-button, sl-alert etc.) -->
-  <script type="module">
-    import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js';
-  </script>
+  <!-- ✅ Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ Tailwind CSS (from django-tailwind) -->
-  {% tailwind_css %}
+  <!-- ✅ Common Styles (navbar animation, card style etc.) -->
+  <style>
+    sl-carousel {
+      height: 85vh;
+      width: 100%;
+    }
 
-  <!-- Optional: Your custom stylesheet -->
-  {# <link rel="stylesheet" href="{% static 'style.css' %}"> #}
+    sl-carousel-item img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-overview {
+      max-width: 340px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    .card-overview [slot='footer'] {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .navbar-hidden {
+      transform: translateY(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar-visible {
+      transform: translateY(0);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    sl-rating::part(base) {
+      font-size: 1.25rem;
+    }
+  </style>
 </head>
+
 <body class="bg-gray-50 text-gray-900">
 
-  <!-- 🔻 Main Content Block -->
-  <main class="container mx-auto px-4 py-8">
+  <!-- ✅ Navbar Auto-Hide Script (usable in all pages) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let lastScrollTop = 0;
+      const navbar = document.getElementById("navbar");
+
+      if (navbar) {
+        window.addEventListener("scroll", function () {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          if (scrollTop > lastScrollTop) {
+            navbar.classList.remove("navbar-visible");
+            navbar.classList.add("navbar-hidden");
+          } else {
+            navbar.classList.remove("navbar-hidden");
+            navbar.classList.add("navbar-visible");
+          }
+          lastScrollTop = scrollTop;
+        });
+      }
+    });
+  </script>
+
+  <!-- ✅ Page Block -->
+  <main class="container mx-auto px-4 py-6">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- 🔻 JS Script Block -->
   {% block scripts %}{% endblock %}
 </body>
 </html>
