@@ -13,6 +13,7 @@ def chai_detail(request, chai_id):
     return render(request, 'Chai/chai_detail.html', {'chai': chai_item})
 
 def chai_home(request):
+    print("🟢 User redirected to home after logout")
     chai_info = Chai.objects.all()  # Fetch all Chai objects from the database
     return render(request, 'Chai/chai_home.html', {'chais': chai_info})
 

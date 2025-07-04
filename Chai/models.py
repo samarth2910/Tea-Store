@@ -24,13 +24,32 @@ class Chai(models.Model):
     def __str__(self):
         return self.name
 
+#one to many
 class Chai_Review(models.Model):
-    chai = models.ForeignKey(Chai, on_delete=models.CASCADE)
+    chai = models.ForeignKey(Chai, on_delete=models.CASCADE,related_name="reviews")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
-    review_text = models.TextField(default="")
+    comments = models.TextField(default="")
     
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.user.username} - {self.chai.name} - {self.rating}"
+    
+class Store(models.Model):
+    name = models.CharField(max_length=100,)
+    location=models.CharField(max_length=200, default="")   
+    chai = models.ManyToManyField(Chai, related_name="stores") 
+
+    def str__(self):
+        return self.name
+    
+#one to one
+class  Chai_Certificate(models.Model):
+    chai = models.OneToOneField(Chai, on_delete=models.CASCADE, related_name="certificate")
+    certificate_number = models.CharField(max_length=50, unique=True)
+    issued_date = models.DateTimeField(default=timezone.now)
+    expiry_date = models.DateTimeField()
+
+    def __str__(self):
+        return f"Certificate {self.certificate_number} for {self.chai.name}"

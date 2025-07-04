@@ -6,31 +6,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>
-    {% block title %}Default Value{% endblock %}
-  </title>
+  <title>{% block title %}Default Value{% endblock %}</title>
 
-  <!-- Shoelace CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.0/dist/themes/light.css" />
+  <!-- ✅ Shoelace CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css" />
 
-  <!-- Tailwind CSS -->
+  <!-- ✅ Shoelace Autoloader (loads all components like sl-input, sl-button, sl-alert etc.) -->
+  <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js';
+  </script>
+
+  <!-- ✅ Tailwind CSS (from django-tailwind) -->
   {% tailwind_css %}
 
-  <!-- Custom Styles -->
-  {% comment %} <link rel="stylesheet" href="{% static 'style.css' %}"> {% endcomment %}
-
+  <!-- Optional: Your custom stylesheet -->
+  {# <link rel="stylesheet" href="{% static 'style.css' %}"> #}
 </head>
 <body class="bg-gray-50 text-gray-900">
-  
 
-  <!-- Main content -->
-  <main class="container mx-auto px-4">
+  <!-- 🔻 Main Content Block -->
+  <main class="container mx-auto px-4 py-8">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Shoelace JS -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.0/dist/shoelace.js"></script>
-
+  <!-- 🔻 JS Script Block -->
   {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -60,7 +60,19 @@
     <sl-button variant="warning" outline onclick="location.href='{% url 'all_chai' %}'">All Chai</sl-button>
     <sl-button variant="warning" outline onclick="location.href='{% url 'view_cart' %}'">🛒 Cart</sl-button>
     <sl-button variant="warning" outline>Orders</sl-button>
-    <sl-button variant="primary" outline>Login</sl-button>
+{% if user.is_authenticated %}
+  <form method="post" action="{% url 'logout' %}" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="bg-red-600 text-white font-medium py-2 px-4 rounded hover:bg-red-700 transition">
+      Logout
+    </button>
+  </form>
+{% else %}
+  <sl-button variant="primary" outline onclick="location.href='{% url 'login' %}'">Login</sl-button>
+{% endif %}
+
+
+
   </nav>
 </header>
 
